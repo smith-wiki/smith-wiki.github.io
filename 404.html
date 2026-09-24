@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moved · Smith Wiki</title>
+<script>
+  // The first wiki used to live at the root of smith.wiki; its pages now live under /wiki/.
+  (function () {
+    var path = window.location.pathname;
+    if (path.indexOf("/wiki/") !== 0) {
+      window.location.replace("/wiki" + path + window.location.search + window.location.hash);
+    }
+  })();
+</script>
+<style>:root { color-scheme: light dark; font-family: system-ui, sans-serif; } body { max-width: 42rem; margin: 3rem auto; padding: 0 1rem; }</style>
+</head>
+<body>
+<h1>Page not found</h1>
+<p>Pages of the first wiki moved under <a href="/wiki/">smith.wiki/wiki/</a>. Other research wikis are listed on <a href="/">smith.wiki</a>.</p>
+</body>
+</html>
