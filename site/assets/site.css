@@ -14,6 +14,8 @@ code { font-family: var(--font-mono); font-variant-ligatures: none; font-size: .
 .mast { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; font: 700 17px/1 var(--font-mono); padding-bottom: 13px; border-bottom: 2px solid var(--fg); }
 .mast a { color: var(--fg); text-decoration: none; }
 .mast nav { display: flex; gap: 20px; font-weight: 400; font-size: 13px; }
+.mast > a { white-space: nowrap; }
+@media (max-width: 480px) { .mast { font-size: 15px; } .mast nav { gap: 10px; font-size: 12px; } }
 .mast nav a { color: var(--grey); }
 
 /* stamp: short monospace line above a headline, first item blue */
@@ -39,6 +41,36 @@ h2 { font: 400 13px/1 var(--font-mono); color: var(--grey); margin: 64px 0 8px; 
 .points li { padding: 16px 0 16px 28px; border-bottom: 1px solid var(--faint); position: relative; }
 .points li::before { content: "→"; position: absolute; left: 0; color: var(--blue); font-family: var(--font-mono); }
 .points b { font-weight: 600; }
+
+/* hero: the typed client name, blue like the announcement video */
+.hx em { font-style: normal; color: var(--blue); }
+.nw { white-space: nowrap; }
+
+/* use cases: a two-column grid of short sections */
+.uses { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; }
+.use { padding: 22px 0 26px; border-bottom: 1px solid var(--faint); }
+.use .n { font: 400 13px/1 var(--font-mono); color: var(--blue); font-variant-ligatures: none; }
+.use h3 { font-size: 21px; font-weight: 700; letter-spacing: -.015em; line-height: 1.2; margin: 10px 0 8px; }
+.use p { margin: 0; font-size: 16px; line-height: 1.55; }
+.use .q { margin-top: 12px; font: 400 13px/1.45 var(--font-mono); color: var(--grey); }
+.use .ex { display: inline-block; margin-top: 12px; font: 400 13px/1.45 var(--font-mono); text-decoration: none; }
+.use .ex::before { content: "→ "; }
+.use .ex:hover { text-decoration: underline; }
+@media (max-width: 640px) { .uses { grid-template-columns: minmax(0, 1fr); } }
+
+/* any harness: client names, then the MCP tools as in the video */
+.harness { padding-top: 20px; }
+.harness p { margin: 0; }
+.harness .big { font-size: 21px; line-height: 1.45; }
+.clients { list-style: none; margin: 22px 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.clients li { font: 400 15px/1 var(--font-mono); padding: 9px 12px; border: 2px solid var(--fg); }
+.clients li:last-child { border-style: dashed; border-color: var(--grey); color: var(--grey); }
+.tools { list-style: none; margin: 0 0 22px; padding: 18px 20px; background: var(--panel); font: 400 16px/1.8 var(--font-mono); overflow-x: auto; }
+.tools li { display: grid; grid-template-columns: 1.4em 13ch auto; white-space: nowrap; }
+.tools li::before { content: "→"; color: var(--blue); }
+.tools code { font-size: inherit; }
+.tools span { color: var(--grey); }
+.harness p:last-child { color: var(--grey); }
 
 /* the contact block: the one Klein fill on the page */
 .contact { margin-top: 24px; padding: 28px 28px 30px; background: var(--klein); color: var(--on-klein); }
