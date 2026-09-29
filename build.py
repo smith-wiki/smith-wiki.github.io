@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Build the smith.wiki registry: one entry per public research repository.
+"""Build smith.wiki: the product page of Smith Wiki, ending with the registry of
+earlier research wikis, one entry per public research repository.
 
 A research repository is a public repository of the organization tagged with the
 TOPIC topic. GitHub Pages serves each one at https://smith.wiki/<repo>/ because
@@ -58,6 +59,7 @@ def main() -> int:
     items = "\n".join(entry(repo) for repo in repos)
     (OUT / "index.html").write_text(template.replace("{{ research }}", items), encoding="utf-8")
     shutil.copy(ROOT / "404.html", OUT / "404.html")
+    shutil.copytree(ROOT / "assets", OUT / "assets")
     (OUT / ".nojekyll").touch()
     print(f"registry lists {len(repos)} research repositories")
     return 0
