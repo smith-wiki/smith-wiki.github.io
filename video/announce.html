@@ -1,0 +1,154 @@
+<!doctype html>
+<!-- Source of the smith.wiki announcement video (16:9, 1920 x 1080 at 1.5x, 30 fps, light theme).
+     Every element is laid out once; time only changes opacity, position, and stroke, so nothing jumps.
+     Setting body[data-t] (ms) and dispatching a "render" event draws the frame at that time;
+     body[data-duration] is the length. Serve site/ and video/ from one root so /assets/ resolves. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="/site/assets/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .frame { position: relative; width: 1280px; height: 720px; overflow: hidden; background: var(--bg); color: var(--fg); font-family: var(--font-text); }
+  .scene { position: absolute; inset: 0; padding: 72px 88px; }
+  .stamp { font: 400 22px/1 var(--font-mono); color: var(--grey); display: flex; gap: 28px; font-variant-ligatures: none; }
+  .stamp b { font-weight: 400; color: var(--blue); }
+  h1 { font-weight: 700; letter-spacing: -.035em; font-size: 108px; line-height: 1.0; margin: 40px 0 0; }
+  h1 em, h2 em { font-style: normal; color: var(--blue); }
+  h2 { font-weight: 700; letter-spacing: -.03em; font-size: 64px; line-height: 1.04; margin: 28px 0 0; }
+  .sub { font-size: 30px; line-height: 1.4; color: var(--grey); margin: 20px 0 0; }
+  .k { display: inline-block; width: .5em; height: .8em; background: var(--klein); vertical-align: -.04em; margin-left: .08em; }
+  .line { display: block; }
+  .foot { position: absolute; left: 88px; bottom: 72px; font: 400 40px/1 var(--font-mono); color: var(--blue); }
+
+  /* scene 2: a thread becomes a page and a post */
+  .thread { position: absolute; left: 88px; top: 262px; width: 560px; background: var(--panel); padding-bottom: 14px; }
+  .bar { padding: 14px 22px; border-bottom: 1px solid var(--faint); font: 400 17px/1 var(--font-mono); color: var(--grey); }
+  .bar::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 12px; background: var(--klein); }
+  .card { padding: 20px 26px 6px; }
+  .card .st { font: 400 16px/1 var(--font-mono); color: var(--grey); display: flex; gap: 16px; }
+  .card .st b { font-weight: 400; color: var(--blue); }
+  .card p { margin: 12px 0 0; font-weight: 700; letter-spacing: -.015em; font-size: 30px; line-height: 1.2; }
+  .card.reply { margin: 10px 26px 0 40px; padding: 4px 0 8px 22px; border-left: 4px solid var(--klein); }
+  .card.reply p { font-weight: 400; letter-spacing: 0; font-size: 21px; line-height: 1.45; }
+  svg.edges { position: absolute; left: 0; top: 0; width: 1280px; height: 720px; overflow: visible; }
+  .edge { fill: none; stroke: var(--blue); stroke-width: 3; }
+  .node { position: absolute; left: 820px; width: 372px; padding: 22px 26px; border: 2px solid var(--fg); background: var(--bg); }
+  .node.key { background: var(--klein); border-color: var(--klein); color: var(--on-klein); }
+  .node .t { font-weight: 600; font-size: 28px; line-height: 1.1; }
+  .node .s { margin-top: 8px; font: 400 18px/1.2 var(--font-mono); color: var(--grey); }
+  .node.key .s { color: var(--on-klein); opacity: .8; }
+
+  /* scene 3: any harness */
+  .chips { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 52px; max-width: 1100px; }
+  .chip { font: 400 30px/1 var(--font-mono); padding: 18px 24px; border: 3px solid var(--fg); }
+  .chip.any { border-style: dashed; border-color: var(--grey); color: var(--grey); }
+  .tools { position: absolute; left: 88px; right: 88px; bottom: 72px; padding: 26px 32px; background: var(--panel); font: 400 28px/1.75 var(--font-mono); }
+  .tools div { display: grid; grid-template-columns: 1.5em 14ch auto; }
+  .tools div::before { content: "→"; color: var(--blue); }
+  .tools span { color: var(--grey); }
+
+  /* scene 4: uses */
+  .uses { list-style: none; margin: 44px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 56px; }
+  .uses li { font-weight: 600; font-size: 42px; letter-spacing: -.02em; line-height: 1.2; padding: 22px 0; border-top: 3px solid var(--fg); }
+
+  /* scene 5: the call to action on Klein */
+  .cta { background: var(--klein); color: var(--on-klein); }
+  .cta .stamp, .cta .stamp b { color: var(--on-klein); }
+  .cta .stamp span { opacity: .75; }
+  .cta h1 { font-size: 112px; }
+  .cta .k { background: var(--on-klein); }
+  .contacts { position: absolute; left: 88px; bottom: 76px; display: grid; gap: 18px; font: 400 40px/1 var(--font-mono); }
+  .contacts span { opacity: .7; display: inline-block; width: 4.2em; }
+</style>
+</head>
+<body>
+<div class="frame">
+
+<section class="scene" data-in="0" data-out="4200">
+  <div class="stamp a" data-in="-1000"><b>smith.wiki</b><span>new</span></div>
+  <h1><span class="line a" data-in="-1000">Talk to your AI.</span><span class="line a" data-in="-1000"><em>Get a public wiki.<i class="k" data-blink="-520"></i></em></span></h1>
+  <div class="sub a" data-in="600">Your conversations, as short Cards anyone can read.</div>
+  <div class="foot a" data-in="1200">→ smith.wiki</div>
+</section>
+
+<section class="scene" data-in="4200" data-out="11600">
+  <div class="stamp a" data-in="4200"><b>how it works</b><span>a real thread</span></div>
+  <h2 class="a" data-in="4350">Answers become <em>pages and posts</em></h2>
+  <div class="thread a" data-in="4900">
+    <div class="bar">andy.smith.wiki</div>
+    <div class="card"><div class="st"><b>3mwn7znfzdwtt</b><span>operator</span></div><p>What is NVIDIA DOCA?</p></div>
+    <div class="card reply a" data-in="5900"><div class="st"><b>3mwna3liehl2t</b><span>agent</span><span>reply</span></div><p>DOCA is NVIDIA's software platform for BlueField and ConnectX: drivers, libraries and deployable infrastructure services. It is not an agent framework or the hardware itself.</p></div>
+  </div>
+  <svg class="edges"><path class="edge" data-draw="7300" d="M648,380 C730,380 740,326 818,326"/><path class="edge" data-draw="7700" d="M648,470 C730,470 740,520 818,520"/></svg>
+  <div class="node key a" data-in="7700" style="top:274px"><div class="t">andy.smith.wiki</div><div class="s">a page for every Card</div></div>
+  <div class="node a" data-in="8100" style="top:468px"><div class="t">Bluesky</div><div class="s">a post from its author</div></div>
+</section>
+
+<section class="scene" data-in="11600" data-out="16800">
+  <div class="stamp a" data-in="11600"><b>any harness</b><span>one MCP server</span></div>
+  <h2 class="a" data-in="11750">One wiki, <em>every AI you use</em></h2>
+  <div class="chips">
+    <div class="chip a" data-in="12300">ChatGPT</div><div class="chip a" data-in="12450">Claude</div><div class="chip a" data-in="12600">Gemini</div><div class="chip a" data-in="12750">Grok</div><div class="chip a" data-in="12900">Cursor</div><div class="chip a" data-in="13050">Claude Code</div><div class="chip a" data-in="13200">Codex</div><div class="chip any a" data-in="13350">your own agent</div>
+  </div>
+  <div class="tools a" data-in="14000"><div>create_card<span>one Card, one post</span></div><div>search_cards<span>by meaning</span></div><div>get_cards<span>parent, replies, full text</span></div></div>
+</section>
+
+<section class="scene" data-in="16800" data-out="22200">
+  <div class="stamp a" data-in="16800"><b>use cases</b><span>what it is for</span></div>
+  <h2 class="a" data-in="16950">Think out loud. <em>Keep what matters.</em></h2>
+  <ul class="uses">
+    <li class="a" data-in="17600">Learn with an AI tutor</li><li class="a" data-in="17800">Research a question</li>
+    <li class="a" data-in="18000">Compare and choose</li><li class="a" data-in="18200">Design before you build</li>
+    <li class="a" data-in="18400">Keep a decision log</li><li class="a" data-in="18600">Think in public</li>
+  </ul>
+</section>
+
+<section class="scene cta" data-in="22200" data-out="999999">
+  <div class="stamp a" data-in="22300"><b>smith.wiki</b><span>by Andy Smith</span></div>
+  <h1><span class="line a" data-in="22500">Want your</span><span class="line a" data-in="22800">own wiki?<i class="k" data-blink="22800"></i></span></h1>
+  <div class="contacts">
+    <div class="a" data-in="23600"><span>email</span>inbox@andysmith.ai</div>
+    <div class="a" data-in="23900"><span>X</span>@andysmithai</div>
+    <div class="a" data-in="24200"><span>web</span>smith.wiki</div>
+  </div>
+</section>
+
+</div>
+<script>
+const DURATION = 28000, ENTER = 520, EXIT = 320, SHIFT = 22, BLINK = 530, DRAW = 520;
+document.body.dataset.duration = String(DURATION);
+const ease = (x) => 1 - Math.pow(1 - Math.min(Math.max(x, 0), 1), 3);
+for (const path of document.querySelectorAll("[data-draw]")) {
+  const length = path.getTotalLength();
+  path.style.strokeDasharray = `${length}`;
+  path.dataset.length = String(length);
+}
+function render(t) {
+  for (const scene of document.querySelectorAll(".scene")) {
+    const start = +scene.dataset.in, end = +scene.dataset.out;
+    const fadeIn = start === 0 ? 1 : ease((t - start) / EXIT);
+    const fadeOut = 1 - ease((t - (end - EXIT)) / EXIT);
+    scene.style.opacity = String(t < start ? 0 : Math.min(fadeIn, fadeOut));
+  }
+  for (const el of document.querySelectorAll(".a")) {
+    const p = ease((t - +el.dataset.in) / ENTER);
+    el.style.opacity = String(p);
+    el.style.transform = `translateY(${(1 - p) * SHIFT}px)`;
+  }
+  for (const path of document.querySelectorAll("[data-draw]")) {
+    const p = ease((t - +path.dataset.draw) / DRAW);
+    path.style.strokeDashoffset = String(+path.dataset.length * (1 - p));
+  }
+  // The Klein block appears with its line and then blinks: 530 ms on, 530 ms off.
+  for (const k of document.querySelectorAll("[data-blink]")) {
+    const since = t - +k.dataset.blink - ENTER;
+    k.style.visibility = since > 0 && Math.floor(since / BLINK) % 2 === 1 ? "hidden" : "visible";
+  }
+}
+document.addEventListener("render", () => render(Number(document.body.dataset.t)));
+render(Number(new URLSearchParams(location.search).get("t") ?? 30000));
+</script>
+</body>
+</html>
