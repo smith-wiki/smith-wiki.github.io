@@ -39,6 +39,9 @@
   .node .t { font-weight: 600; font-size: 28px; line-height: 1.1; }
   .node .s { margin-top: 8px; font: 400 18px/1.2 var(--font-mono); color: var(--grey); }
   .node.key .s { color: var(--on-klein); opacity: .8; }
+  /* Not built yet: grey and dashed. */
+  .node.soon { border: 2px dashed var(--grey); color: var(--grey); }
+  .edge.soon { stroke: var(--grey); stroke-width: 2.5; stroke-dasharray: 7 7; }
 
   /* scene 3: any harness */
   .chips { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 52px; max-width: 1100px; }
@@ -81,9 +84,10 @@
     <div class="card"><div class="st"><b>3mwn7znfzdwtt</b><span>operator</span></div><p>What is NVIDIA DOCA?</p></div>
     <div class="card reply a" data-in="5900"><div class="st"><b>3mwna3liehl2t</b><span>agent</span><span>reply</span></div><p>DOCA is NVIDIA's software platform for BlueField and ConnectX: drivers, libraries and deployable infrastructure services. It is not an agent framework or the hardware itself.</p></div>
   </div>
-  <svg class="edges"><path class="edge" data-draw="7300" d="M648,380 C730,380 740,326 818,326"/><path class="edge" data-draw="7700" d="M648,470 C730,470 740,520 818,520"/></svg>
-  <div class="node key a" data-in="7700" style="top:274px"><div class="t">andy.smith.wiki</div><div class="s">a page for every Card</div></div>
-  <div class="node a" data-in="8100" style="top:468px"><div class="t">Bluesky</div><div class="s">a post from its author</div></div>
+  <svg class="edges"><path class="edge" data-draw="7300" d="M648,330 C730,330 740,283 818,283"/><path class="edge" data-draw="7700" d="M648,430 C730,430 740,423 818,423"/><path class="edge soon a" data-in="8500" d="M648,530 C730,530 740,563 818,563"/></svg>
+  <div class="node key a" data-in="7700" style="top:232px"><div class="t">andy.smith.wiki</div><div class="s">a page for every Card</div></div>
+  <div class="node a" data-in="8100" style="top:372px"><div class="t">Bluesky</div><div class="s">a post from its author</div></div>
+  <div class="node soon a" data-in="8500" style="top:512px"><div class="t">Mastodon · fediverse</div><div class="s">you choose where · soon</div></div>
 </section>
 
 <section class="scene" data-in="11600" data-out="16800">
